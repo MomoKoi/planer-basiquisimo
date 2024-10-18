@@ -1,0 +1,206 @@
+{
+  "completedTasks": [
+    {
+      "completed": true,
+      "time": "",
+      "title": "Regar las plantas",
+      "comment": "Ya regadas."
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "acabar planner cute o trabajar en ello",
+      "comment": "1. No se carga la caja de texto enriquecido en la parte de anotaciones.\n2. El check tiene que tener imagenes que tengo preparadas que cambian segun si checked o uncheked, debe tener un efecto explosion al hacer click similar al rastro que deja el cursor.\n3. Al marcar check se tiene que tachar toda la fila. Pero tambien la fila y las casillas de hora quedan verde feo, debria ser un color que encaje con la estetica de la web general y esquema de colores, ya no.\n4. El boton de agregar filas ya no agrega filas nuevas creo, comprobar\n5. Los dos botones de guardar creo no funcionan. Si funcionan tienen que mandar un mensaje indicando que se ha guardado y en caso de guardado por json, que me pida donde guardar el archivo. Debe guardarse cualquier contenido de pagina incluido el posible contenido caja de anotaciones en ambos casos.\n6. Hay que conseguir que en la casilla de la hora se pueda alternar entre modo horas con formato XX:XX-XX:XX de 24h y tener un boton, por ejemplo uno de dos lineas paralelas con una flecga mirando a cada lado,no se si esta implementado, pero debe permitir cambiar cada vez que se le de cambiar de un modo a otro. Esta casilla tambien debe tacharse con las demas en la fila.\n7. La casilla de check no debe ser muy grande, mas bien corta, para dejar espacio al resto de elementos de la fila.\n8. Asegurar que todos los iconos como la papelera o el cursor perdonalizado carganbien."
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "ajustar codigo para imprimir plan cuidado facial",
+      "comment": "1. Ajustes en orden de pasos \n2. ajustar div de break page visualizando impresion desde opera\n3. guardar y si esta para imprimir, imprimir como folleto doble cara encuadernacion a izq\n"
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "COME",
+      "comment": "pasta con pesto y la cesta de queso aunque sea, toma fruta"
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "Poner en marcha el lavavajillas",
+      "comment": "Lavavajillas en marcha."
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "CUIDADO DE TU CARA",
+      "comment": ""
+    }
+  ],
+  "scheduleTasks": [
+    {
+      "completed": false,
+      "time": "",
+      "title": "Coloca las piedras con doble maceta en romero y perejil",
+      "comment": "que se le salen raices pero no estan pa trasplantar, riegalas por los bordes que se extiendas pallá las raices >:|"
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "Cambiar la tierra de los gatos",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "limpia mascara fria de cara",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "dibuja",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "registrar ropa en app y doblarla y guardarla en su sitio",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "quitar goma a pantalones y arreglarlos",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "toca teclado o teclado del libro",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "haz funda bolso",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "lee",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "musica",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "podcast",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "punto de cruz",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "arreglar tela verde balcón",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "lavadora",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "shadow work",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "jugar",
+      "comment": "de pc, de movil, switch, ds,,, da igual"
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "diario breve de cada dia",
+      "comment": "llevas como 15 dias sin escribir o 20, a 18 oct"
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "barrer y fregar suelos",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "pinta",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "despejar estudio",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "actividades inglés/de cuadernos de trabajo impresos o comprados",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "planea videos y hazlos, apunta en la note para todo",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "limpiar baño y cocina",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "limpiar fuente gatos",
+      "comment": "escrito 18 oct"
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "limpia zapatillas, los dos pares de pelitos de ir por casa",
+      "comment": ""
+    },
+    {
+      "completed": false,
+      "time": "",
+      "title": "limpia nevera y horno",
+      "comment": ""
+    }
+  ],
+  "additionalTasks": [
+    {
+      "completed": false,
+      "time": "",
+      "title": "contesta gente cuando puedas pa empezar a socializar, pide perdon",
+      "comment": "pide perdon y eso eh"
+    }
+  ]
+}

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Horario Diario</title>
+    <style>
+        /* Estilos para las flechas de scroll */
+        .scroll-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .scroll-buttons button {
+            background-color: #2E8B57;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .scroll-buttons button:hover {
+            background-color: #3CB371;
+            transform: translateY(-2px);
+        }
+
+        .scroll-buttons button:focus {
+            outline: none;
+        }
+
+        /* Estilos originales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            border-bottom: 2px solid #2E8B57;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: #2E8B57;
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .task-item {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .task-item input[type="checkbox"] {
+            position: absolute;
+            top: 20px;
+            left: 15px;
+            accent-color: #2E8B57;
+            transform: scale(1.5);
+        }
+
+        .task-content {
+            margin-left: 50px;
+        }
+
+        .task-time {
+            width: 80px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .task-title {
+            font-size: 1.2em;
+            width: calc(100% - 100px);
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .task-title::placeholder {
+            color: #999;
+        }
+
+        .comment-box {
+            width: 100%;
+            height: 80px;
+            margin-top: 10px;
+            resize: vertical;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .completed .task-content {
+            text-decoration: line-through;
+            color: #777;
+        }
+
+        button {
+            padding: 8px 12px;
+            background-color: #2E8B57;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+
+        button:hover {
+            background-color: #3CB371;
+        }
+
+        /* Estilos para botones de mover y borrar */
+        .action-buttons {
+            position: absolute;
+            right: 15px;
+            top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .action-buttons button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+            color: #2E8B57;
+        }
+
+        .action-buttons button:hover {
+            color: #3CB371;
+        }
+
+        /* Estilos para el botón de añadir tarea */
+        .add-task-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #2E8B57;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .add-task-button:hover {
+            background-color: #3CB371;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Horario Diario</h1>
+
+        <!-- Tareas ya completadas -->
+        <h2 class="section-title">Tareas Ya Completadas</h2>
+        <ul id="completed-tasks">
+            <li class="task-item completed">
+                <input type="checkbox" checked>
+                <div class="task-content">
+                    <div class="task-header">
+                        <input type="time" class="task-time" value="">
+                        <input type="text" class="task-title" value="Regar las plantas">
+                    </div>
+                    <textarea class="comment-box">Ya regadas.</textarea>
+                </div>
+                <!-- Botones de acción -->
+                <div class="action-buttons">
+                    <button onclick="moveTaskUp(this)">&#9650;</button>
+                    <button onclick="moveTaskDown(this)">&#9660;</button>
+                    <button onclick="deleteTask(this)">🗑️</button>
+                </div>
+            </li>
+            <li class="task-item completed">
+                <input type="checkbox" checked>
+                <div class="task-content">
+                    <div class="task-header">
+                        <input type="time" class="task-time" value="">
+                        <input type="text" class="task-title" value="Poner en marcha el lavavajillas">
+                    </div>
+                    <textarea class="comment-box">Lavavajillas en marcha.</textarea>
+                </div>
+                <!-- Botones de acción -->
+                <div class="action-buttons">
+                    <button onclick="moveTaskUp(this)">&#9650;</button>
+                    <button onclick="moveTaskDown(this)">&#9660;</button>
+                    <button onclick="deleteTask(this)">🗑️</button>
+                </div>
+            </li>
+        </ul>
+        <!-- Botón para añadir nuevas tareas completadas -->
+        <button class="add-task-button" onclick="addNewTask('completed-tasks')">➕ Añadir nueva tarea completada</button>
+
+        <!-- Horario con horas -->
+        <h2 class="section-title">Horario</h2>
+        <ul id="schedule-tasks">
+            <!-- Tareas originales -->
+            <li class="task-item">
+                <input type="checkbox">
+                <div class="task-content">
+                    <div class="task-header">
+                        <input type="time" class="task-time" value="">
+                        <input type="text" class="task-title" value="Ahora - 15:30">
+                    </div>
+                    <p>Descanso y relajación (escuchar música, ver TikTok, etc.)</p>
+                    <textarea class="comment-box" placeholder="Añade un comentario..."></textarea>
+                </div>
+                <!-- Botones de acción -->
+                <div class="action-buttons">
+                    <button onclick="moveTaskUp(this)">&#9650;</button>
+                    <button onclick="moveTaskDown(this)">&#9660;</button>
+                    <button onclick="deleteTask(this)">🗑️</button>
+                </div>
+            </li>
+            <li class="task-item">
+                <input type="checkbox">
+                <div class="task-content">
+                    <div class="task-header">
+                        <input type="time" class="task-time" value="15:30">
+                        <input type="text" class="task-title" value="15:30 - 16:00">
+                    </div>
+                    <p>Calentar y disfrutar de la comida ya preparada</p>
+                    <textarea class="comment-box" placeholder="Añade un comentario..."></textarea>
+                </div>
+                <!-- Botones de acción -->
+                <div class="action-buttons">
+                    <button onclick="moveTaskUp(this)">&#9650;</button>
+                    <button onclick="moveTaskDown(this)">&#9660;</button>
+                    <button onclick="deleteTask(this)">🗑️</button>
+                </div>
+            </li>
+        </ul>
+        <!-- Botón para añadir nuevas tareas al horario -->
+        <button class="add-task-button" onclick="addNewTask('schedule-tasks')">➕ Añadir nueva tarea al Horario</button>
+
+        <!-- Tareas adicionales sin hora -->
+        <h2 class="section-title">Tareas Adicionales</h2>
+        <ul id="additional-tasks">
+            <li class="task-item">
+                <input type="checkbox">
+                <div class="task-content">
+                    <div class="task-header">
+                        <input type="time" class="task-time" value="">
+                        <input type="text" class="task-title" value="Cambiar la tierra de los gatos">
+                    </div>
+                    <textarea class="comment-box" placeholder="Añade un comentario..."></textarea>
+                </div>
+                <!-- Botones de acción -->
+                <div class="action-buttons">
+                    <button onclick="moveTaskUp(this)">&#9650;</button>
+                    <button onclick="moveTaskDown(this)">&#9660;</button>
+                    <button onclick="deleteTask(this)">🗑️</button>
+                </div>
+            </li>
+        </ul>
+        <!-- Botón para añadir nuevas tareas adicionales -->
+        <button class="add-task-button" onclick="addNewTask('additional-tasks')">➕ Añadir nueva tarea adicional</button>
+
+     <!-- Botones de guardar y exportar -->
+    <div style="text-align: center; margin-top: 30px;">
+        <button onclick="guardarHorario()">Guardar</button>
+        <button onclick="exportarHorario()">Exportar</button>
+    </div>
+
+    <!-- Flechas de Scroll -->
+    <div class="scroll-buttons">
+        <button id="scroll-to-top" title="Ir al Inicio">⬆️</button>
+        <button id="scroll-to-bottom" title="Ir al Final">⬇️</button>
+    </div>
+    </div>
+
+    <!-- Scripts para funciones de mover, añadir, borrar, guardar y exportar -->
+
+  <script>
+    // Función para cargar el JSON
+    async function cargarJSON() {
+        try {
+            const response = await fetch('datos.json');
+            
+            // Verificar si la respuesta es correcta
+            if (!response.ok) throw new Error('Error al cargar el JSON');
+            
+            const data = await response.json();
+
+            // Generar las tareas y cargarlas en los contenedores adecuados
+            generarTareasHTML(data.completedTasks, 'completed-tasks');
+            generarTareasHTML(data.scheduleTasks, 'schedule-tasks');
+            generarTareasHTML(data.additionalTasks, 'additional-tasks');
+            
+            console.log('JSON cargado correctamente');
+        } catch (error) {
+            console.error('Error al cargar el JSON:', error);
+        }
+    }
+
+    // Función para generar las tareas en el HTML
+    function generarTareasHTML(tareas, containerId) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = ''; 
+        tareas.forEach(tarea => {
+            const tareaHTML = `
+                <li class="task-item">
+                    <input type="checkbox" ${tarea.completed ? 'checked' : ''}>
+                    <div class="task-content">
+                        <div class="task-header">
+                            <input type="time" class="task-time" value="${tarea.time || ''}">
+                            <input type="text" class="task-title" value="${tarea.title}">
+                        </div>
+                        <textarea class="comment-box">${tarea.comment}</textarea>
+                    </div>
+                </li>
+            `;
+            container.innerHTML += tareaHTML;
+        });
+    }
+
+    // Combinamos la carga del JSON y la verificación del localStorage en una única función
+    window.onload = async function() {
+        try {
+            await cargarJSON(); // Cargar el JSON de tareas
+
+            // Cargar tareas guardadas en localStorage si existen
+            if (localStorage.getItem('horarioDiario')) {
+                let horario = JSON.parse(localStorage.getItem('horarioDiario'));
+                loadTasksData('completed-tasks', horario.completedTasks);
+                loadTasksData('schedule-tasks', horario.scheduleTasks);
+                loadTasksData('additional-tasks', horario.additionalTasks);
+            }
+        } catch (error) {
+            console.error('Error al cargar la página:', error);
+        }
+    };
+
+    // Función para cargar datos de tareas desde localStorage
+    function loadTasksData(listId, tasks) {
+        let taskList = document.getElementById(listId);
+        taskList.innerHTML = ''; 
+        tasks.forEach(function(taskData) {
+            let newTask = document.createElement('li');
+            newTask.classList.add('task-item');
+            newTask.innerHTML = `
+                <input type="checkbox" ${taskData.completed ? 'checked' : ''}>
+                <div class="task-content">
+                    <div class="task-header">
+                        <input type="time" class="task-time" value="${taskData.time || ''}">
+                        <input type="text" class="task-title" value="${taskData.title}">
+                    </div>
+                    <textarea class="comment-box">${taskData.comment}</textarea>
+                </div>
+                <div class="action-buttons">
+                    <button onclick="moveTaskUp(this)">&#9650;</button>
+                    <button onclick="moveTaskDown(this)">&#9660;</button>
+                    <button onclick="deleteTask(this)">🗑️</button>
+                </div>
+            `;
+            taskList.appendChild(newTask);
+        });
+    }
+
+    // Función para guardar el horario en localStorage
+    function guardarHorario() {
+        let horario = {
+            completedTasks: getTasksData('completed-tasks'),
+            scheduleTasks: getTasksData('schedule-tasks'),
+            additionalTasks: getTasksData('additional-tasks')
+        };
+        localStorage.setItem('horarioDiario', JSON.stringify(horario));
+        alert('Horario guardado correctamente.');
+    }
+
+    // Función para obtener los datos de las tareas
+    function getTasksData(listId) {
+        let tasks = [];
+        let taskList = document.getElementById(listId);
+        let taskItems = taskList.querySelectorAll('.task-item');
+        taskItems.forEach(function(taskItem) {
+            let checkbox = taskItem.querySelector('input[type="checkbox"]');
+            let timeInput = taskItem.querySelector('.task-time');
+            let titleInput = taskItem.querySelector('.task-title');
+            let commentBox = taskItem.querySelector('.comment-box');
+            tasks.push({
+                completed: checkbox.checked,
+                time: timeInput ? timeInput.value : null,
+                title: titleInput ? titleInput.value : '',
+                comment: commentBox.value
+            });
+        });
+        return tasks;
+    }
+
+    // Función para exportar el horario en formato JSON
+    function exportarHorario() {
+        let horario = {
+            completedTasks: getTasksData('completed-tasks'),
+            scheduleTasks: getTasksData('schedule-tasks'),
+            additionalTasks: getTasksData('additional-tasks')
+        };
+        let dataStr = JSON.stringify(horario, null, 2);
+        let blob = new Blob([dataStr], { type: "application/json;charset=utf-8" });
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = 'horario_diario.json';
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    // Funciones para mover, eliminar y añadir tareas
+    function moveTaskUp(button) {
+        let task = button.closest('li');
+        let previousTask = task.previousElementSibling;
+        while (previousTask && previousTask.tagName !== 'LI') {
+            previousTask = previousTask.previousElementSibling;
+        }
+        if (previousTask) {
+            task.parentNode.insertBefore(task, previousTask);
+        }
+    }
+
+    function moveTaskDown(button) {
+        let task = button.closest('li');
+        let nextTask = task.nextElementSibling;
+        while (nextTask && nextTask.tagName !== 'LI') {
+            nextTask = nextTask.nextElementSibling;
+        }
+        if (nextTask) {
+            task.parentNode.insertBefore(nextTask, task);
+        }
+    }
+
+    function deleteTask(button) {
+        if (confirm('¿Estás seguro de que deseas eliminar esta tarea?')) {
+            let task = button.closest('li');
+            task.parentNode.removeChild(task);
+        }
+    }
+
+    function addNewTask(listId) {
+        let taskList = document.getElementById(listId);
+        let newTask = document.createElement('li');
+        newTask.classList.add('task-item');
+        newTask.innerHTML = `
+            <input type="checkbox">
+            <div class="task-content">
+                <div class="task-header">
+                    <input type="time" class="task-time">
+                    <input type="text" class="task-title" placeholder="Título de la nueva tarea">
+                </div>
+                <textarea class="comment-box" placeholder="Añade un comentario..."></textarea>
+            </div>
+            <div class="action-buttons">
+                <button onclick="moveTaskUp(this)">&#9650;</button>
+                <button onclick="moveTaskDown(this)">&#9660;</button>
+                <button onclick="deleteTask(this)">🗑️</button>
+            </div>
+        `;
+        taskList.appendChild(newTask);
+    }
+
+    // Función para scroll al inicio
+    document.getElementById('scroll-to-top').addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    // Función para scroll al final
+    document.getElementById('scroll-to-bottom').addEventListener('click', function() {
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+        });
+    });
+</script>
+
+</body>
+</html>
